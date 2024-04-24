@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         self.static_todayIncome.setText(_translate("MainWindow", "TodayIncome"))
         self.active_todayIncome.setText(_translate("MainWindow", "0"))
         self.static_dailyGoals.setText(_translate("MainWindow", "DailyGoals"))
-        self.active_dailyGoals.setText(_translate("MainWindow", "0"))
+        self.active_dailyGoals.setText(_translate("MainWindow", "100000000"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Graphic Command"))
         self.menuMenu.setTitle(_translate("MainWindow", "Menu"))
         self.menuAbout.setTitle(_translate("MainWindow", "About"))

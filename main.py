@@ -3,11 +3,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtCore import *
 from datetime import datetime
 from settings import settingWindow
+from configControl import *
 
 from UI_mainWindow import Ui_MainWindow
 from logProcessor import *
 from Algorithm import seconds_to_hms
-
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -22,6 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.countThread = bountyCountThread()
         self.countThread.signal_totalIncome.connect(self.set_label_totalIncome)
         self.countThread.signal_ESSIncome.connect(self.set_label_ESSIncome)
+        self.settingWindow.settingSignal.connect(self.settingUpdate)
 
     def startCount(self):
         self.countThread.is_running = True
@@ -47,6 +48,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def set_label_totalIncome(self, value):
         self.active_totalIncome.setText(value)
+        dailyGoals=self.active_dailyGoals.getText()
+        dailyGoals=int(dailyGoals)
+        processPercent=int((int(value)/dailyGoals)*100)
+        if processPercent>=100:
+            self.progressBar.setValue(100)
+        else:
+            self.progressBar.setValue(processPercent)
+        if int(value)>dailyGoals:
+            self.active_dailyGoals.setStyleSheet("color:green")
 
     def set_label_rattingTime(self, value):
         self.active_rattingTime.setText(value)
@@ -59,6 +69,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def showSettings(self):
         self.settingWindow.show()
+
+    def settingUpdate(self):
+        data=readConfig()
+        self.active_dailyGoals.setText(str(data['dailyGoals']))
 
 
 if __name__ == '__main__':
