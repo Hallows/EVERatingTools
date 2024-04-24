@@ -48,7 +48,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def set_label_totalIncome(self, value):
         self.active_totalIncome.setText(value)
-        dailyGoals=self.active_dailyGoals.getText()
+        dailyGoals=self.active_dailyGoals.text()
         dailyGoals=int(dailyGoals)
         processPercent=int((int(value)/dailyGoals)*100)
         if processPercent>=100:
