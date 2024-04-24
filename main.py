@@ -1,7 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtCore import *
 from datetime import datetime
+from settings import settingWindow
 
 from UI_mainWindow import Ui_MainWindow
 from logProcessor import *
@@ -11,6 +12,8 @@ from Algorithm import seconds_to_hms
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.settingWindow = settingWindow()
+        self.setFixedSize(597, 369)
         self.timerCount = 0
         self.avgCount = 0
         self.setupUi(self)
@@ -38,8 +41,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.timerCount = self.timerCount + 1
         self.set_label_rattingTime(seconds_to_hms(self.timerCount))
         if self.timerCount % 300 == 0:
-            self.avgCount=self.avgCount+1
-            tmp = str(int(self.countThread.totalCount/self.avgCount))+"/5mins"
+            self.avgCount = self.avgCount + 1
+            tmp = str(int(self.countThread.totalCount / self.avgCount)) + "/5mins"
             self.set_label_ISKSpeed(tmp)
 
     def set_label_totalIncome(self, value):
@@ -53,6 +56,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def set_label_ISKSpeed(self, value):
         self.active_ISKSpeed.setText(value)
+
+    def showSettings(self):
+        self.settingWindow.show()
 
 
 if __name__ == '__main__':
